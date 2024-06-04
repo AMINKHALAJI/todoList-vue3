@@ -1,27 +1,3 @@
-<script setup>
-import Header from"./components/Header.vue"
-import AddTask from "./components/AddTask.vue";
-import Tasks from "./components/Tasks.vue"
-
-import { ref ,defineProps } from 'vue';
-
-const tasks=ref([]);
-
-const Id=ref(0);
-
-const handleAddTask=(newTask) => { 
-  tasks.value.Id=Id.value++;
-tasks.value.push(newTask);
-
-
- }
-
- const handleRemoveTask=(e) => { 
-  tasks.value.splice(e,1)
-  
-  }
-</script>
-
 <template>
   <div class="flex items-start pt-9 justify-center h-screen bg-neutral-300">
 
@@ -35,6 +11,35 @@ tasks.value.push(newTask);
   </div>
 </div>
 </template>
+
+
+<script setup>
+import Header from"./components/Header.vue"
+import AddTask from "./components/AddTask.vue"
+import Tasks from "./components/Tasks.vue"
+
+import { ref ,defineProps } from 'vue';
+
+const tasks=ref([JSON.parse(localStorage.getItem('todoData'))]||'[]');
+
+const Id=ref(0);
+
+const handleAddTask=(newTask) => { 
+  tasks.value.Id=Id.value++;
+tasks.value.push(newTask);
+localStorage.setItem('todoData', JSON.stringify(tasks.value));
+
+
+ }
+
+
+ const handleRemoveTask=(e) => { 
+  tasks.value.splice(e,1);
+  localStorage.setItem('todoData', JSON.stringify(tasks.value));
+
+  }
+</script>
+
 
 <style scoped>
 
