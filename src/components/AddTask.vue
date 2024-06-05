@@ -3,11 +3,11 @@
     <form
       action="#"
       @submit.prevent="handleSubmit"
-      class="py-10 w-full flex justify-around"
+      class="py-10 w-full flex flex-col md:flex-row items-center gap-4 justify-between md:justify-around"
     >
       <input
         type="text"
-        class="py-2 px-4 rounded-lg w-3/5"
+        class="py-2 px-4 rounded-lg md:w-3/5 w-3/4"
         v-model="task"
         name="task"
         id=""

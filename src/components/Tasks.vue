@@ -49,7 +49,7 @@ const handleRemove = (index) => {
 
 <style scoped>
 .taskDone{
-  /* text-decoration: underline; */
+  text-decoration: line-through;
   border-left: 0.8rem solid rgb(6, 236, 121);
   color: rgb(218, 239, 238);
   background-color:rgb(17, 75, 78) ;
