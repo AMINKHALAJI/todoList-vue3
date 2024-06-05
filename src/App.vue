@@ -7,7 +7,7 @@
     <Header/>
     
     <AddTask @addTask="handleAddTask"/>
-    <Tasks :tasks="tasks" @removeTask="handleRemoveTask"/>
+    <Tasks :tasks="tasks" @toggleTaskDone="handleToggleTaskDone" @removeTask="handleRemoveTask"/>
   </div>
 </div>
 </template>
@@ -18,11 +18,19 @@ import Header from"./components/Header.vue"
 import AddTask from "./components/AddTask.vue"
 import Tasks from "./components/Tasks.vue"
 
-import { ref ,defineProps } from 'vue';
+import { ref ,defineProps, onMounted } from 'vue';
 
-const tasks=ref([JSON.parse(localStorage.getItem('todoData'))]||'[]');
-
+// const tasks=ref([JSON.parse(localStorage.getItem('todoData'))]||[]);
+const tasks=ref([]);
 const Id=ref(0);
+
+onMounted(() => {
+  // Load stored tasks or initialize to an empty array
+  const storedTasks = JSON.parse(localStorage.getItem('todoData')) || [];
+  tasks.value = storedTasks;
+  // Set the Id to the next available number based on the loaded tasks
+  Id.value = storedTasks.length > 0 ? storedTasks[storedTasks.length - 1].id + 1 : 0;
+});
 
 const handleAddTask=(newTask) => { 
   tasks.value.Id=Id.value++;
@@ -38,6 +46,13 @@ localStorage.setItem('todoData', JSON.stringify(tasks.value));
   localStorage.setItem('todoData', JSON.stringify(tasks.value));
 
   }
+
+  const handleToggleTaskDone = (index) => {
+  tasks.value[index].taskDone = !tasks.value[index].taskDone;
+  localStorage.setItem('todoData', JSON.stringify(tasks.value));
+};
+
+  
 </script>
 
 
